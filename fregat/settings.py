@@ -9,7 +9,7 @@ SECRET_KEY = 'django-insecure-tv@vubbyb#v5q=-)f*_38b_r2ht@re0#l4&!96m&85)^!rrb%o
 SESSION_COOKIE_DOMAIN = None
 DEBUG = False
 
-ALLOWED_HOSTS: tuple = ('localhost', 'fregat-club.ru', 'u24382.netangels.ru')
+ALLOWED_HOSTS: tuple = ('localhost', 'fregat-club.ru', 'fregat-club.na4u.ru')
 
 DATABASES = {
     'default': {
