@@ -297,7 +297,7 @@ class PricelistCategory(OrderMixin):
     class Meta:
         verbose_name = 'Категория прайслиста'
         verbose_name_plural = 'Категории прайслистов'
-        ordering = ('order_no', )
+        ordering = ('order_no', 'pk', )
 
     def __str__(self):
         return self.name
@@ -394,7 +394,7 @@ class PriceItem(OrderMixin, ThumbnailProcessor):
     class Meta:
         verbose_name = 'Цена'
         verbose_name_plural = 'Цены'
-        ordering = ('category__order_no', 'order_no', )
+        ordering = ('category__order_no', 'order_no', 'pk', )
 
     def __str__(self):
         return self.name
@@ -545,7 +545,7 @@ class MenuItem(OrderMixin):
     class Meta:
         verbose_name = "Пункт меню"
         verbose_name_plural = "Пункты меню"
-        ordering = ('thread_id', 'is_child', 'order_no', )
+        ordering = ('thread_id', 'is_child', 'order_no', 'pk', )
 
     def __str__(self):
         return self.name
@@ -1223,7 +1223,7 @@ class Teaser(OrderMixin, ThumbnailProcessor):
     class Meta:
         verbose_name = 'Тизер'
         verbose_name_plural = 'Тизеры'
-        ordering = ('order_no', '-publish_date')
+        ordering = ('order_no', '-publish_date', 'pk', )
 
     def __str__(self):
         return self.heading
@@ -1330,7 +1330,7 @@ class Media(OrderMixin, ThumbnailProcessor):
     class Meta:
         verbose_name = "Медиа"
         verbose_name_plural = "Медиа"
-        ordering = ('order_no', )
+        ordering = ('order_no', 'pk', )
 
     def __str__(self):
         return self.caption or str(self.pk)
