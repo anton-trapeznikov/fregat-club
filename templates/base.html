@@ -53,7 +53,9 @@
     <body>
         <div id="page" class="page page_{{ page_type }}">
             <header class="header">
-                <img class="header__logo" src="/static/resources/img/header__logo.png" title="Клуб Фрегат – банный комплекс Каменска Уральского." alt="">
+                {% if page_type != 'homepage' %}<a class="translucency header__logo-link" href="/">{% endif %}
+                    <img class="header__logo" src="/static/resources/img/header__logo.png" title="Клуб Фрегат – банный комплекс Каменска Уральского." alt="">
+                {% if page_type != 'homepage' %}</a>{% endif %}
             </header>
 
             <div class="layout__fixing-min-padding main-menu">
@@ -93,8 +95,8 @@
                             {% endfor %}
 
                             {% if main_menu %}
-                                <div class="main-menu__item main-menu__item_extra main-menu__item_dropdown">
-                                    <button class="main-menu__item-link">Еще…</button>
+                                <div class="main-menu__item main-menu__item_extra main-menu__item_hidden main-menu__item_dropdown">
+                                    <button class="main-menu__item-link 12">Еще…</button>
                                     <div class="main-menu__submenu">
                                         <div class="main-menu__submenu-heading-container">
                                             <span class="main-menu__submenu-heading">Еще…</span>
@@ -156,7 +158,7 @@
             </div>
 
             {% block hero %}{% endblock %}
-            <div class="layout__fixing-min-padding">
+            <div class="layout__fixing-min-padding payload payload_{{ page_type }} {% if without_breadcrumbs %}payload_without-breadcrumbs{% endif %}">
                 <div class="layout__fixing-max-width">
                     {% include "breadcrumbs.html" %}
                     {% block payload %}{% endblock %}

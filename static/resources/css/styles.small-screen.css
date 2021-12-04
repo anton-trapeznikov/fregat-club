@@ -148,7 +148,18 @@
     }
 
     /* === main-menu === */
+    /* === payload === */
+    .payload
+    {
 
+    }
+
+    .payload_without-breadcrumbs
+    {
+        margin-top: var(--interblock-margin);
+    }
+
+    /* === payload === */
     /* === breadcrumbs === */
 
     .breadcrumbs

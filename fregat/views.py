@@ -38,10 +38,12 @@ def homepage_last_modified(request, *args, **kwargs):
 
 
 class HomepageView(TemplateView, MediaViewMixin):
+    '''
     @method_decorator(condition(last_modified_func=homepage_last_modified))
     def dispatch(self, request, *args, **kwargs):
         return super(HomepageView, self).dispatch(
             request, *args, **kwargs)
+    '''
 
     template_name = "homepage.html"
 
@@ -74,10 +76,12 @@ def page_last_modified(request, slug):
 
 
 class PageView(DetailView, MediaViewMixin):
+    '''
     @method_decorator(condition(last_modified_func=page_last_modified))
     def dispatch(self, request, *args, **kwargs):
         return super(PageView, self).dispatch(
             request, *args, **kwargs)
+    '''
 
     model = Page
     context_object_name = 'page'

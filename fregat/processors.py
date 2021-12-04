@@ -127,7 +127,7 @@ def teasers_processor(request):
         add_to_actions=True,
         is_published=True,
         publish_date__lte=now,
-    ).select_related('page')
+    ).select_related('page')[:1]
 
     news = Teaser.objects.filter(
         add_to_news=True,

@@ -142,6 +142,8 @@
         });
 
         resizeHandlers.push(function(){
+            console.log('------------')
+            console.log('Run resize')
             const container = window.storage.topMenu.container;
             let containerWidth = getElementWidth(container) - getLeftPadding(container) - getRightPadding(container);
 
@@ -154,6 +156,7 @@
                     Array.prototype.forEach.call(items, function(item, i){
                         let width = Math.ceil(getElementWidth(item) + getLeftMargin(item) + getRightMargin(item));
                         item.dataset.width = width;
+
                         if (i > 0) {
                             window.storage.topMenu.itemWidths += width;
                         } else {
@@ -204,6 +207,7 @@
             container.classList.remove('main-menu__navigation_strict-width');
             window.storage.topMenu.resizeIsInProgressNow = false;
         });
+
     })();
 
     (function galleryNamespace(){
@@ -352,10 +356,7 @@
     (function yandexReviewsNamespace(){
         onReadyHandlers.push(function(){
             const container = document.getElementById('yandex-reviews-container');
-            console.log('---')
-            console.log(container)
             if (container) {
-                console.log('!!')
                 const template = document.getElementById('yandex-reviews').content.cloneNode(true);
                 container.appendChild(template);
             }
