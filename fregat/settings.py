@@ -32,6 +32,12 @@ if json_config_path.is_file():
         for param, value in json_config.items():
             setattr(sys.modules[__name__], param, value)
 
+if isinstance(MEDIA_ROOT, str):
+    MEDIA_ROOT = Path(MEDIA_ROOT)
+
+if isinstance(STATIC_ROOT, str):
+    STATIC_ROOT = Path(STATIC_ROOT)
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
