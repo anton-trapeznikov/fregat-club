@@ -1,0 +1,20 @@
+@media screen and (min-width: 481px) and (max-width: 1024px) {
+    .main-menu__phone-text
+    {
+        pointer-events: none;
+        font-family: var(--accidental-font);
+        display: block;
+    }
+
+    .hero__image-container
+    {
+        position: relative;
+        width: 100%;
+        padding-top: var(--t-ratio);
+    }
+
+    .hero__image
+    {
+        background-image: var(--t-image);
+    }
+}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block payload %}
+<div class="layout__two-column">
+    <main class="text layout__left-column">
+        {% block main_content %}{% endblock %}
+    </main>
+
+    <aside class="layout__right-column sidebar">
+        {% block sidebar %}{% endblock %}
+        {% if config.add_yandex_reviews %}
+            <section class="sidebar-block sidebar-block_reviews">
+                <h2 class="title title_h2 sidebar-block__head">Яндекс-отзывы</h2>
+                <div id="yandex-reviews-container" class="sidebar-block__content">
+
+                </div>
+                <template id="yandex-reviews">
+                    <div style="width:100%;height:500px;overflow:hidden;position:relative;"><iframe style="width:100%;height:100%;border:1px solid #e6e6e6;border-radius:8px;box-sizing:border-box" src="https://yandex.ru/maps-reviews-widget/182271915385?comments"></iframe><a href="https://yandex.ru/maps/org/fregat/182271915385/" target="_blank" style="box-sizing:border-box;text-decoration:none;color:#b3b3b3;font-size:10px;font-family:YS Text,sans-serif;padding:0 20px;position:absolute;bottom:8px;width:100%;text-align:center;left:0">Фрегат на карте Каменска‑Уральского — Яндекс.Карты</a></div>
+                </template>
+            </section>
+        {% endif %}
+
+        <section class="sidebar-block sidebar-block_social">
+            <h2 class="title title_h2 sidebar-block__head">Будьте с нами</h2>
+            <div class="sidebar-block__content sidebar-block__content_social">
+                <a rel="nofollow" class="translucency social-link social-link_instagram" href="https://www.instagram.com/fregat_ku/" target="_blank"></a>
+                <a rel="nofollow" class="translucency social-link social-link_ok" href="https://www.odnoklassniki.ru/group/56856502337569/" target="_blank"></a>
+            </div>
+        </section>
+    </aside>
+</div>
+{% endblock %}

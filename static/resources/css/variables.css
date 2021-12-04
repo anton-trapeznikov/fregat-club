@@ -1,0 +1,16 @@
+:root
+{
+    --translucency: 0.70;
+    --transition-duration: 0.4s;
+    --transition-short-duration: 0.2s;
+    --base-font-color: #333;
+    --link-color: #0087d8;
+    --gray-color: #808389;
+    --red-color: #ff003d;
+    --deep-sea-color: #1c2541;
+    --accidental-font: 'Montserrat', system-ui, sans-serif;
+    --base-font: 'IBM Plex Sans', system-ui, sans-serif;
+    --panel-color: #ececec;
+    --alice-blue-color: #e2f5fe;
+}
+

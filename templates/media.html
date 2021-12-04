@@ -1,0 +1,37 @@
+{% if media_list %}
+    {% if not without_media_head %}
+        <h2 class="{% if page.html_content|length > 20 %}article___heading-with-inblock-margin{% endif %}">
+            {% if has_video and has_photo %}Фото и видео{% elif has_video %}Видео{% else %}Фото{% endif %}
+        </h2>
+    {% endif %}
+
+    <div class="article___media-list">
+        {% for m in media_list %}
+            {% if m.media_type == 'video' %}
+                <div class="article__media article__media_{{ m.media_type }}" data-id="{{ m.pk }}" style="background-image: url({{ m.thumbnail }});" title="{{ m.caption }}">
+                    {% if m.caption %}
+                        <div class="article__media-caption">{{ m.caption }}</div>
+                    {% endif %}
+                </div>
+            {% else %}
+                <a class="article__media article__media_{{ m.media_type }}" href="{{ m.big_photo }}" data-id="{{ m.pk }}" style="background-image: url({{ m.thumbnail }});" title="{{ m.caption }}">
+                    {% if m.caption %}
+                        <div class="article__media-caption">{{ m.caption }}</div>
+                    {% endif %}
+                </a>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    {% if media_pages|length > 1 %}
+        <div class="article__media-paginator">
+            {% for p in media_pages %}
+                {% if p != media_page_number %}
+                    <a class="link link_default-not-underlined article__media-paginator-item article__media-paginator-item_link" href="?media-page={{ p }}">{{ p }}</a>
+                {% else %}
+                    <span class="article__media-paginator-item article__media-paginator-item_current">{{ p }}</span>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endif %}

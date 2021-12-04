@@ -1,0 +1,43 @@
+{% load helpers %}
+{
+    "@context": "http://schema.org/",
+    "@type": "Organization",
+
+    {% if config.organization_name %}
+    "name": "{{ config.organization_name }}",
+    {% endif %}
+
+    "@id": "https://fregat-club.ru/",
+    "url" : "https://fregat-club.ru/",
+    "image" : "https://fregat-club.ru/static/resources/img/logo.png",
+
+    {% if config.organization_description %}
+    "description": "{{ config.organization_description }}",
+    {% endif %}
+
+    {% if config.phone %}
+    "telephone": "{{ config.phone|callable_phone }}",
+    {% endif %}
+
+    {% if config.email %}
+    "email": "{{ config.email }}",
+    {% endif %}
+
+    {% if config.streetAddress %}
+    "address": {
+        "@type" : "PostalAddress",
+        {% if config.postal_code %}
+            "postalCode": "{{ config.postal_code }}",
+        {% endif %}
+        {% if config.region %}
+            "addressRegion": "{{ config.region }}",
+        {% endif %}
+        {% if config.city %}
+        "addressLocality": "{{ config.city }}",
+        {% endif %}
+        "streetAddress": "{{ config.street_address }}"
+    },
+    {% endif %}
+
+    "logo" : "https://fregat-club.ru/static/resources/img/logo.png"
+}

@@ -1,0 +1,33 @@
+@media screen and (max-width: 480px) {
+    .main-menu__phone-text
+    {
+        display: none;
+    }
+
+    .main-menu__phone
+    {
+        background-image: url(/static/resources/img/main-menu__phone.svg);
+        background-position: left center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        min-height: 36px;
+        min-width: 36px;
+    }
+
+    .main-menu__city
+    {
+        display: none;
+    }
+
+    .hero__image-container
+    {
+        position: relative;
+        width: 100%;
+        padding-top: var(--m-ratio);
+    }
+
+    .hero__image
+    {
+        background-image: var(--m-image);
+    }
+}

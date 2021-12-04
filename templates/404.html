@@ -1,0 +1,15 @@
+{% extends "two_column_layout.html" %}
+
+{% block main_content %}
+    <article class="text article">
+        <h1>Такой страницы нет</h1>
+        <p>
+            Проверьте, нет ли опечатки в адресе.
+            Вы можете начать навигацию по сайту с <a href="/">главной страницы</a>.
+        </p>
+    </article>
+{% endblock %}
+{% block sidebar %}
+    {% include "teasers.html" with teasers=actions class_modificator="actions" section_head="Акции" %}
+    {% include "teasers.html" with teasers=news class_modificator="news" section_head="Новости" %}
+{% endblock %}

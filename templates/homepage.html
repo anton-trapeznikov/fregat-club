@@ -1,0 +1,59 @@
+{% extends "two_column_layout.html" %}
+{% load l10n %}
+{% block hero %}
+    {% if homepage.has_hero %}
+        <div class="hero">
+            <div class="hero__image-container" style="--d-height: {{ homepage.hero_desktop_height }}px; --t-ratio: {{ homepage.hero_tablet_ratio|unlocalize }}%; --m-ratio: {{ homepage.hero_mobile_ratio|unlocalize }}%;">
+                <div class="hero__image" style="--d-height: {{ homepage.hero_desktop_height }}px; --d-width: {{ homepage.hero_desktop_width }}px; --d-image: url(/media/{{ homepage.hero_desktop.name }}); --t-image: url(/media/{{ homepage.hero_tablet.name }}); --m-image: url(/media/{{ homepage.hero_mobile.name }});" >
+                    <div class="hero__dimmer hero__dimmer_left"></div>
+                    <div class="hero__dimmer hero__dimmer_right"></div>
+                    <div class="layout__fixing-min-padding">
+                        <div class="layout__fixing-max-width hero__head-container">
+                            <h1 class="title title_h1 hero__head">Клуб Фрегат</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block main_content %}
+    <article class="text article">
+        {{ homepage.html_content|safe }}
+
+        <h2 class="title title_h2 homepage__stickers-title">Наши преимушества</h2>
+        <div class="homepage__sticker-list">
+            <div class="homepage__sticker homepage__sticker_wood">
+                <div class="title title_h3 homepage__sticker-text">Баня на дровах</div>
+            </div>
+            <div class="homepage__sticker homepage__sticker_pool">
+                <div class="title title_h3 homepage__sticker-text">Бассейн и хамам</div>
+            </div>
+            <div class="homepage__sticker homepage__sticker_pot">
+                <div class="title title_h3 homepage__sticker-text">Чан на дровах</div>
+            </div>
+            <div class="homepage__sticker homepage__sticker_billiard">
+                <div class="title title_h3 homepage__sticker-text">Бильярдный зал</div>
+            </div>
+            <div class="homepage__sticker homepage__sticker_food">
+                <div class="title title_h3 homepage__sticker-text">Кафе со вкусной едой</div>
+            </div>
+            <div class="homepage__sticker homepage__sticker_parking">
+                <div class="title title_h3 homepage__sticker-text">Парковка для клиентов</div>
+            </div>
+            <div class="homepage__sticker homepage__sticker_fulltime">
+                <div class="title title_h3 homepage__sticker-text">Мы работаем круглосуточно</div>
+            </div>
+            <div class="homepage__sticker homepage__sticker_good">
+                <div class="title title_h3 homepage__sticker-text">Вам понравится у нас</div>
+            </div>
+        </div>
+
+        {% include "media.html" %}
+    </article>
+{% endblock %}
+{% block sidebar %}
+    {% include "teasers.html" with teasers=actions class_modificator="actions" section_head="Акции" %}
+    {% include "teasers.html" with teasers=news class_modificator="news" section_head="Новости" %}
+{% endblock %}

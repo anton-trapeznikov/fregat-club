@@ -1,0 +1,18 @@
+{% if not without_breadcrumbs %}
+    {% spaceless %}
+        <div class="breadcrumbs">
+            <div class="breadcrumbs__nav">
+                <a href="/" class="translucency breadcrumbs__link breadcrumbs__link_homepage">
+                    <img class="breadcrumbs__homepage" src="/static/resources/img/breadcrumbs__homepage.svg" alt="Главная страница">
+                </a>
+                <span class="breadcrumbs__devider"></span>
+
+                {% if page_type == 'flatpage' %}
+                    <span class="breadcrumbs__current">{{ page.heading }}</span>
+                {% elif page_type == '404' %}
+                    <span class="breadcrumbs__current">404</span>
+                {% endif %}
+            </div>
+        </div>
+    {% endspaceless %}
+{% endif %}

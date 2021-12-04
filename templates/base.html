@@ -1,0 +1,349 @@
+<!doctype html>
+{% load helpers l10n compress %}
+{% spaceless %}
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+
+        <title>{{ metatag.title }}</title>
+        <meta name="description" content="{{ metatag.description }}">
+        <meta name="keywords" content="{{ metatag.keywords }}">
+
+        <meta name="viewport" content="width=320, initial-scale=1">
+
+        <link rel="apple-touch-icon" sizes="180x180" href="/static/resources/favicon/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/static/resources/favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/static/resources/favicon/favicon-16x16.png">
+        <link rel="shortcut icon" href="/static/resources/favicon/favicon.svg">
+        <link rel="manifest" href="/static/resources/manifest/site.webmanifest">
+
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+        {% if rel_canonical %}
+            <link rel="canonical" href="{{ rel_canonical }}">
+        {% endif %}
+
+        {% if meta_robots_noindex %}
+            <meta name="robots" content="noindex, follow"/>
+        {% endif %}
+
+        {% compress css %}
+            <link rel="stylesheet" href="/static/vendors/reset-css/reset.4.0.css">
+            <link rel="stylesheet" href="/static/vendors/system-font/system-font.css">
+            <link rel="stylesheet" href="/static/vendors/ibm-plex-sans/ibm-plex-sans.css">
+            <link rel="stylesheet" href="/static/vendors/montserrat/montserrat.css">
+            <link rel="stylesheet" href="/static/resources/css/variables.css">
+            <link rel="stylesheet" href="/static/resources/css/common.css">
+            <link rel="stylesheet" href="/static/resources/css/common.large-screen.css">
+            <link rel="stylesheet" href="/static/resources/css/common.small-screen.css">
+            <link rel="stylesheet" href="/static/resources/css/typography.large-screen.css">
+            <link rel="stylesheet" href="/static/resources/css/typography.small-screen.css">
+            <link rel="stylesheet" href="/static/resources/css/styles.small-screen.css">
+            <link rel="stylesheet" href="/static/resources/css/styles.small-screen.mobile.css">
+            <link rel="stylesheet" href="/static/resources/css/styles.small-screen.tablets.css">
+            <link rel="stylesheet" href="/static/resources/css/styles.large-screen.css">
+            <link rel="stylesheet" href="/static/resources/css/styles.large-screen.desktops.css">
+        {% endcompress %}
+
+        {% if config.head_injection %}{{ config.head_injection|safe }}{% endif %}
+
+        {% if json_ld %}<script type="application/ld+json">{{ json_ld|safe }}</script>{% endif %}
+    </head>
+
+    <body>
+        <div id="page" class="page page_{{ page_type }}">
+            <header class="header">
+                <img class="header__logo" src="/static/resources/img/header__logo.png" title="Клуб Фрегат – банный комплекс Каменска Уральского." alt="">
+            </header>
+
+            <div class="layout__fixing-min-padding main-menu">
+                <div class="layout__fixing-max-width main-menu__inner">
+                    <div id="main-menu__navigation" class="main-menu__navigation main-menu__navigation_strict-width">
+                        <nav class="main-menu__items">
+                            <button id="main-menu__mobile-menu-button" class="no-desktop main-menu__mobile-menu-button"></button>
+                            {% for item in main_menu %}
+                                <div class="main-menu__item {% if item.children %}main-menu__item_dropdown{% endif %}" data-id="{{ item.pk }}">
+                                    {% if item.url %}
+                                        <a class="main-menu__item-link" href="{{ item.url }}">{{ item.name }}</a>
+                                    {% else %}
+                                        <span class="main-menu__item-link">{{ item.name }}</span>
+                                    {% endif %}
+
+                                    {% if item.children %}
+                                        <div class="main-menu__submenu">
+                                            <div class="main-menu__submenu-heading-container">
+                                                {% if item.url %}
+                                                    <a class="main-menu__submenu-heading" href="{{ item.url }}">{{ item.name }}</a>
+                                                {% else %}
+                                                    <span class="main-menu__submenu-heading">{{ item.name }}</span>
+                                                {% endif %}
+                                            </div>
+                                            {% for child in item.children %}
+                                                <div class="main-menu__submenu-item">
+                                                    {% if child.url %}
+                                                        <a class="main-menu__submenu-item-link" href="{{ child.url }}">{{ child.name }}</a>
+                                                    {% else %}
+                                                        <span class="main-menu__submenu-item-link">{{ child.name }}</span>
+                                                    {% endif %}
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+
+                            {% if main_menu %}
+                                <div class="main-menu__item main-menu__item_extra main-menu__item_dropdown">
+                                    <button class="main-menu__item-link">Еще…</button>
+                                    <div class="main-menu__submenu">
+                                        <div class="main-menu__submenu-heading-container">
+                                            <span class="main-menu__submenu-heading">Еще…</span>
+                                        </div>
+                                        {% for item in main_menu %}
+                                            <div class="main-menu__submenu-item" data-id="{{ item.pk }}">
+                                                {% if item.url %}
+                                                    <a class="main-menu__submenu-item-link" href="{{ item.url }}">
+                                                        {{ item.name }}
+                                                    </a>
+                                                {% else %}
+                                                    <span class="main-menu__submenu-item-link">{{ item.name }}</span>
+                                                {% endif %}
+                                                {% if item.children %}
+                                                    <button class="main-menu__submenu-expander">
+                                                        <span class="main-menu__submenu-expander-icon"></span>
+                                                    </button>
+                                                {% endif %}
+
+                                                {% if item.children %}
+                                                    <div class="main-menu__third-level-menu" style="--length: {{ item.children|length }}">
+                                                        {% for child in item.children %}
+                                                            <div class="main-menu__third-level-menu-item">
+                                                                {% if child.url %}
+                                                                    <a class="main-menu__third-level-menu-item-link" href="{{ child.url }}">
+                                                                        {{ child.name }}
+                                                                    </a>
+                                                                {% else %}
+                                                                    <span class="main-menu__third-level-menu-item-link">
+                                                                        {{ child.name }}
+                                                                    </span>
+                                                                {% endif %}
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </nav>
+                    </div>
+                    <div class="main-menu__address-container">
+                        <div class="main-menu__address-n-worktime">
+                            <div class="main-menu__address">
+                                {% if config.city %}<span class="main-menu__city">{{ config.city }}, </span>{% endif %}
+                                {% if config.address %}<span class="main-menu__address-text">{{ config.address }}</span>{% endif %}
+                            </div>
+                            <div class="main-menu__worktime">Круглосуточно</div>
+                        </div>
+                    </div>
+                    <div class="main-menu__phone-container">
+                        <a class="link link_default-not-underlined main-menu__phone" href="tel:+{{ config.phone|callable_phone }}">
+                            <span class="title_h4 main-menu__phone-text">{{ config.phone }}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            {% block hero %}{% endblock %}
+            <div class="layout__fixing-min-padding">
+                <div class="layout__fixing-max-width">
+                    {% include "breadcrumbs.html" %}
+                    {% block payload %}{% endblock %}
+                </div>
+            </div>
+
+            <footer id="contacts" class="layout__fixing-min-padding footer">
+                <div class="layout__fixing-max-width footer__inner">
+                    <div class="layout__two-column footer__layout">
+                        <section class="layout__right-column footer__location" itemscope itemtype="http://schema.org/Organization">
+                            <div itemscope itemtype="http://schema.org/LocalBusiness">
+                                {% if config.organization_name %}
+                                    <h2 class="title title_h2 footer__name" itemprop="name">{{ config.organization_name }}</h2>
+                                {% endif %}
+
+                                <data class="footer__worktime" itemprop="openingHours" value="Mo-Su">С понедельника по воскресенье, круглосуточно</data>
+
+                                <div class="footer__address" itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress">
+                                    {% if config.street_address %}
+                                        <span class="title_h4 footer__street" itemprop="streetAddress">
+                                            {{ config.street_address }}
+                                        </span>
+                                    {% endif %}
+
+                                    {% if config.city %}
+                                        <span class="title_h4 footer__city" itemprop="addressLocality">{{ config.city }}</span>,
+                                    {% endif %}
+
+                                    {% if config.postal_code %}
+                                        <span class="title_h4 footer__postal-code" itemprop="postalCode">{{ config.postal_code }}</span>
+                                    {% endif %}
+                                </div>
+
+                                <a class="title_h4 link link_default-not-underlined title_h3 footer__phone" itemprop="telephone" href="tel:+{{ config.phone|callable_phone }}">
+                                    {{ config.phone }}
+                                </a>
+                            </div>
+                        </section>
+                        <div id="footer__map" class="layout__left-column footer__map">
+                            {% if has_geo_coordinates %}
+                                <div class="no-desktop footer__open-with">
+                                    <div class="title title_h4 footer__open-with-title">Открыть карту в:</div>
+                                    <div class="footer__open-with-buttons">
+                                        <span class="footer__open-with-yandex"></span>
+                                        <a class="footer__open-with-button footer__open-with-button_navi" href="yandexnavi://build_route_on_map?lat_to={{ geo_data.latitude|unlocalize }}&amp;lon_to={{ geo_data.longitude|unlocalize }}">
+                                            Навигатор
+                                        </a>
+
+                                        <a target="_blank" class="footer__open-with-button footer__open-with-button_maps" href="https://yandex.ru/maps/?rtext=~{{ geo_data.latitude|unlocalize }}%2C{{ geo_data.longitude|unlocalize }}">
+                                            Карты
+                                        </a>
+
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="text layout__right-column footer__legal-info">
+                            <div class="footer__privacy">
+                                <a class="link link_default-not-underlined" href="/privacy/">Политика обработки персональных данных</a>
+                            </div>
+                            <div class="footer__is-not-an-offer">
+                                Информация на сайте не является публичной офертой.
+                            </div>
+                            <div class="footer__copyright">
+                                © 2012-{% now "Y" %} Клуб Фрегат
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <div id="mobile-menu__overlay" class="no-desktop mobile-menu__overlay"></div>
+        </div>
+        <div class="mobile-menu" id="mobile-menu">
+            <div class="mobile-menu__heading">
+                <div class="title_h2 mobile-menu__company-name">Фрегат</div>
+                <div class="mobile-menu__phone">
+                    <a class="title_h3 link link_default-not-underlined mobile-menu__phone-link" href="tel:+{{ config.phone|callable_phone }}">
+                        {{ config.phone }}
+                    </a>
+                </div>
+                <div class="mobile-menu__location">
+                    {% if config.address %}<span class="mobile-menu__address">{{ config.address }}</span>{% endif %}
+                </div>
+                <button id="mobile-menu__close" class="mobile-menu__close"></button>
+            </div>
+            <div class="mobile-menu__items">
+                {% for item in main_menu %}
+                    <div class="mobile-menu__item">
+                        {% if item.url %}
+                            <a class="link link_default-not-underlined mobile-menu__item-link" href="{{ item.url }}">
+                                {{ item.name }}
+                            </a>
+                        {% else %}
+                            <span class="link link_default-not-underlined mobile-menu__item-link">{{ item.name }}</span>
+                        {% endif %}
+
+                        {% if item.children %}
+                            <button class="mobile-menu__expander">
+                                <span class="mobile-menu__expander-icon"></span>
+                            </button>
+                        {% endif %}
+
+                        {% if item.children %}
+                            <div class="mobile-menu__submenu" style="--length: {{ item.children|length }}">
+                                {% for child in item.children %}
+                                    <div class="mobile-menu__item mobile-menu__item_subitem">
+                                        {% if child.url %}
+                                            <a class="mobile-menu__item-link mobile-menu__item-link_subitem" href="{{ child.url }}">
+                                                {{ child.name }}
+                                            </a>
+                                        {% else %}
+                                            <span class="mobile-menu__item-link mobile-menu__item-link_subitem">
+                                                {{ child.name }}
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        {% if has_video or has_photo %}
+            <template id="gallery-photo-template">
+                <img src="" alt="" class="gallery__image">
+            </template>
+
+            <template id="gallery-video-template">
+                <div class="gallery__video-wrapper">
+                    <iframe class="gallery__video"></iframe>
+                </div>
+            </template>
+
+            <template id="gallery-template">
+                <div class="gallery">
+                    <button class="translucency gallery__close" title="Закрыть галерею"></button>
+                    <div class="gallery__thumbnails">
+                        {% for m in media_list %}
+                            <button class="translucency gallery__thumbnail" style="background-image: url({{ m.thumbnail }});" data-whois="{{ m.media_type }}" data-src="{% if m.media_type == 'video' %}{{ m.youtube_id }}{% else %}{{ m.big_photo }}{% endif %}" data-id="{{ m.pk }}" data-caption="{{ m.caption }}" data-text="{{ m.text }}">
+                            </button>
+                        {% endfor %}
+                    </div>
+
+                    <div class="gallery__media-container">
+                        <div class="gallery__media gallery__media_hidden">
+
+                        </div>
+
+                        <div class="gallery__note gallery__note_caption gallery__note_hidden">
+                            <div class="gallery__note-inner"></div>
+                            <button class="translucency gallery__close-note-button"></button>
+                        </div>
+
+                        <div class="gallery__note gallery__note_text gallery__note_hidden">
+                            <div class="gallery__note-inner"></div>
+                            <button class="translucency gallery__close-note-button"></button>
+                        </div>
+
+                        {% if media_list|length > 1 %}
+                            <button class="gallery__nav-button gallery__nav-button_prev" data-inc="-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="gallery__nav-button-inner">
+                                    <path fill="" d="M8.293 1.293a1 1 0 011.414 0l10 10a1 1 0 010 1.414l-10 10a1 1 0 11-1.414-1.414L17.585 12 8.293 2.707a1 1 0 01-.083-1.32z"></path>
+                                </svg>
+                            </button>
+
+                            <button class="gallery__nav-button gallery__nav-button_next" data-inc="1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="gallery__nav-button-inner">
+                                    <path fill="" d="M8.293 1.293a1 1 0 011.414 0l10 10a1 1 0 010 1.414l-10 10a1 1 0 11-1.414-1.414L17.585 12 8.293 2.707a1 1 0 01-.083-1.32z"></path>
+                                </svg>
+                            </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </template>
+        {% endif %}
+
+        {{ front_data|json_script:"backendData" }}
+
+        {% compress js file base %}
+            <script src="/static/resources/js/helpers.js"></script>
+            <script src="/static/resources/js/scripts.js"></script>
+        {% endcompress %}
+
+        <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=63ddccec-f86a-4c9d-99ad-f66c7cfeb04e"></script>
+        {% if config.body_injection %}{{ config.body_injection|safe }}{% endif %}
+    </body>
+</html>
+{% endspaceless %}

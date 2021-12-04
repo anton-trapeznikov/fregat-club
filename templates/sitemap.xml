@@ -1,0 +1,13 @@
+{% spaceless %}
+    <?xml version="1.0" encoding="UTF-8"?>
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+        <url><loc>http://fregat-club.ru/</loc><changefreq>monthly</changefreq></url>
+        {% for entry in entries %}
+            <url>
+                <loc>http://fregat-club.ru{{ entry.get_absolute_url }}</loc>
+                <lastmod>{{ entry.last_modified|date:"Y-m-d" }}</lastmod>
+                <changefreq>weekly</changefreq>
+            </url>
+        {% endfor %}
+    </urlset>
+{% endspaceless %}

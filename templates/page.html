@@ -1,0 +1,56 @@
+{% extends "two_column_layout.html" %}
+{% load helpers %}
+{% block main_content %}
+    <article class="text article">
+        <h1>{{ page.heading }}</h1>
+        {{ page.html_content|safe }}
+
+        {% if pricelist %}
+            <div class="pricelist">
+                {% if pricelist_view == 'grid' %}
+                    {% for price in pricelist %}
+                        {% ifchanged price.category %}
+                            <div class="title title_h2 pricelist__category-name">{{ price.category.name }}</div>
+                        {% endifchanged%}
+
+                        <div class="grid-price">
+                            <div class="grid-price__layout">
+                                <div class="grid-price__name-container">
+                                    <span class="grid-price__name">{{ price.name }}
+                                </div>
+                                <div class="grid-price__price-container">
+                                    {% if price.has_detailed_price %}
+                                        <div class="grid-price__price-row">
+                                            <span class="grid-price__price-row-title">Пн-Чт:</span>
+                                            {{ price.price_on_weekdays|draw_price|safe }}
+                                        </div>
+                                        <div class="grid-price__price-row">
+                                            <span class="grid-price__price-row-title">Пт-Вс:</span>
+                                            {{ price.price_on_weekend|draw_price|safe }}
+                                        </div>
+                                        <div class="grid-price__price-row">
+                                            <span class="grid-price__price-row-title">Праздники:</span>
+                                            {{ price.price_on_holydays|draw_price|safe }}
+                                        </div>
+                                    {% else %}
+                                        <div class="grid-price__price-row">
+                                            {{ price.common_price|draw_price|safe }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="pricelist__grid-price-extra"></div>
+                        </div>
+                    {% endfor%}
+                {% else %}
+                {% endif %}
+            </div>
+        {% endif %}
+
+        {% include "media.html" with without_media_head=page.without_media_header %}
+    </article>
+{% endblock %}
+{% block sidebar %}
+    {% include "teasers.html" with teasers=actions class_modificator="actions" section_head="Акции" %}
+    {% include "teasers.html" with teasers=news class_modificator="news" section_head="Новости" %}
+{% endblock %}

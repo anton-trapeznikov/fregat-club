@@ -1,0 +1,20 @@
+{% if teasers %}
+    <section class="sidebar-block sidebar-block_{{ class_modificator }}">
+        <h2 class="title title_h2 sidebar-block__head">{{ section_head }}</h2>
+        {% for teaser in teasers %}
+            <div class="sidebar-block__content">
+                <div class="teaser">
+                    <a href="{{ teaser.get_absolute_url }}" class="teaser__image-container">
+                        <img alt="" class="teaser__image" src="{{ teaser.thumbnail }}">
+                    </a>
+
+                    <a href="{{ teaser.get_absolute_url }}" class="title title_h3 teaser__heading">{{ teaser.heading }}</a>
+
+                    <div class="teaser__date">
+                        {{ teaser.publish_date|date:"d.m.Y" }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </section>
+{% endif %}

@@ -1,0 +1,126 @@
+html
+{
+    font-size: 10px;
+}
+
+body.disable-scroll
+{
+    overflow: hidden;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+*:focus
+{
+    outline: none;
+}
+
+.translucency
+{
+    transition: opacity var(--transition-duration) ease-out;
+}
+
+.translucency:hover
+{
+    opacity: 0.85;
+}
+
+.link
+{
+    text-decoration: none;
+    transition: border-color var(--transition-duration) ease-out;
+    color: var(--link-color);
+    border-bottom: 1px solid var(--link-color);
+    cursor: pointer;
+}
+
+.link:hover
+{
+    opacity: 0.9;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+}
+
+.link:active
+{
+    transform: scale(0.98);
+}
+
+.link_default-not-underlined
+{
+    border-bottom: 1px solid transparent;
+}
+
+.link_default-not-underlined:hover
+{
+    border-bottom: 1px solid var(--link-color);
+}
+
+.no-select
+{
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+
+button
+{
+    display: inline-block;
+    border: none;
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    color: var(--base-font-color);
+    cursor: pointer;
+    outline: none;
+    font-family: var(--base-font);
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: transparent;
+}
+
+button:focus
+{
+    outline: none;
+}
+
+button::-moz-focus-inner
+{
+    border: 0;
+}
+
+input,
+textarea,
+select
+{
+    padding: 0;
+    border: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.price
+{
+    font-family: var(--accidental-font);
+}
+
+.price .price__digit
+{
+    margin-right: 4px;
+    display: inline-block;
+}
+
+.price .price__digit_before-ruble
+{
+    margin-right: 2px;
+}
+
+.price .price__digit_before-cents
+{
+    margin-right: 2px
+}

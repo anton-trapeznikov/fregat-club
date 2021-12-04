@@ -1,0 +1,15 @@
+{
+    "SESSION_COOKIE_DOMAIN": null,
+    "DEBUG": true,
+
+    "DATABASES": {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": "db_name",
+            "USER": "user_name",
+            "PASSWORD": "user_password",
+            "HOST": "127.0.0.1",
+            "PORT": "5432"
+        }
+    }
+}

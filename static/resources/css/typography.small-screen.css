@@ -1,0 +1,227 @@
+@media screen and (max-width: 1023px) {
+    :root
+    {
+        --interblock-margin: 5rem;  /* Межблочный отступ */
+        --in-block-margin-before-section: 3rem;  /* Внутриблочный отступ перед подразделом */
+        --in-block-margin-before-text: 1.5rem;  /* Внутриблочный отступ перед текстом */
+        --in-block-margin-before-non-text: 2rem;  /* Внутриблочный отступ перед нетекстовым контентом */
+    }
+
+    body,
+    .text
+    {
+        font-family: var(--base-font);
+        color: var(--base-font-color);
+        font-size: 1.6rem;
+        line-height: 1.36;
+        font-weight: 400;
+    }
+
+    .text * + h1,
+    .text * + h2,
+    .text * + h3,
+    .text * + h4,
+    .text * + h5,
+    .text * + h6
+    {
+        margin-top: var(--in-block-margin-before-section);
+    }
+
+    .text h1 + h1,
+    .text h1 + h2,
+    .text h1 + h3,
+    .text h1 + h4,
+    .text h1 + h5,
+    .text h1 + h6,
+    .text h2 + h1,
+    .text h2 + h2,
+    .text h2 + h3,
+    .text h2 + h4,
+    .text h2 + h5,
+    .text h2 + h6,
+    .text h3 + h1,
+    .text h3 + h2,
+    .text h3 + h3,
+    .text h3 + h4,
+    .text h3 + h5,
+    .text h3 + h6,
+    .text h4 + h1,
+    .text h4 + h2,
+    .text h4 + h3,
+    .text h4 + h4,
+    .text h4 + h5,
+    .text h4 + h6,
+    .text h5 + h1,
+    .text h5 + h2,
+    .text h5 + h3,
+    .text h5 + h4,
+    .text h5 + h5,
+    .text h5 + h6,
+    .text h6 + h1,
+    .text h6 + h2,
+    .text h6 + h3,
+    .text h6 + h4,
+    .text h6 + h5,
+    .text h6 + h6
+    {
+        margin-top: 0
+    }
+
+    .text + .text
+    {
+        margin-top: var(--interblock-margin);
+    }
+
+    .text > *
+    {
+        margin-bottom: var(--in-block-margin-before-text);
+    }
+
+
+    .text > *:last-child
+    {
+        margin-bottom: 0;
+    }
+
+    .text h1,
+    .text h2,
+    .text h3,
+    .text h4,
+    .text h5,
+    .text h6,
+    .title
+    {
+        font-weight: 700;
+        text-align: left;
+        font-family: var(--accidental-font);
+    }
+
+    .text h1,
+    .title_h1
+    {
+        font-size: 2.4rem;
+        line-height: 3rem;
+    }
+
+    .text h2,
+    .title_h2
+    {
+        font-size: 2rem;
+        line-height: 2.6rem;
+    }
+
+    .text h3,
+    .title_h3
+    {
+        font-size: 1.8rem;
+        line-height: 2.4rem;
+    }
+
+    .text h4,
+    .title_h4
+    {
+        font-size: 1.8rem;
+        line-height: 2.4rem;
+        font-weight: 700;
+    }
+
+    .text h5,
+    .title_h5
+    {
+        font-size: 1.8rem;
+        line-height: 2.2rem;
+        font-weight: 500;
+    }
+
+    .text h6,
+    .title_h6
+    {
+        font-size: 1.8rem;
+        line-height: 2.2rem;
+        font-weight: 300;
+    }
+
+    .title
+    {
+        margin-bottom: var(--in-block-margin-before-text);
+    }
+
+    .title_leading-blocks
+    {
+        margin-bottom: var(--in-block-margin-before-non-text);
+    }
+
+    .text strong
+    {
+        font-weight: 700;
+    }
+
+    .text em
+    {
+        font-style: italic;
+    }
+
+    .text strong em,
+    .text em strong
+    {
+        font-weight: 700;
+        font-style: italic;
+    }
+
+    .text ol
+    {
+        list-style-type: decimal;
+        padding-left: 1.7rem;
+    }
+
+    .text ul
+    {
+        list-style-type: "–";
+        padding-left: 0.8rem;
+    }
+
+    .text ol,
+    .text ul
+    {
+        list-style-position: outside;
+    }
+
+    .text ol li
+    {
+        padding-left: 0.4rem;
+    }
+
+    .text ul li
+    {
+        padding-left: 1rem;
+    }
+
+    .text ol li,
+    .text ul li
+    {
+        padding-bottom: 0.6rem;
+        line-height: 1.3;
+    }
+
+    .text ol li:last-child,
+    .text ul li:last-child
+    {
+        padding-bottom: 0
+    }
+
+    .text a
+    {
+        text-decoration: none;
+        transition: border-color, var(--transition-duration) ease-out;
+        color: var(--link-color);
+        border-bottom: 1px solid transparent;
+        cursor: pointer;
+    }
+
+    .text a:hover
+    {
+        opacity: 0.9;
+        text-decoration: none;
+        border-bottom: 1px solid var(--link-color);
+    }
+}
