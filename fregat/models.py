@@ -16,6 +16,65 @@ import random
 from urllib.request import urlopen
 
 
+class Pricelist(models.Model):
+    name = models.CharField(
+        max_length=255,
+        verbose_name='Название прайслиста',
+        help_text='Используется только в админке.'
+
+    )
+    is_default = models.BooleanField(
+        db_index=True,
+        blank=True,
+        default=False,
+        verbose_name='Прайс-лист по умолчанию',
+        help_text='''
+            <p>
+                Эта настройка необходима для быстрого создания позиций
+                прайсл-листов.
+            </p>
+            <p>
+                При создании позиции прайс-листа необходимо выбрать к
+                какому прайс-листу она относится. Однако если имеется
+                прайс-лист по умолчанию, то это поле можно оставлять
+                пустым, будет использован прайс-лист по умолчанию.
+            </p>
+            <p>
+                В других механиках это поле не используется.
+            </p>
+        '''
+    )
+    PRICELIST_VIEWS = [
+        ('grid', 'Таблица'),
+        ('tile', 'Плитка'),
+    ]
+    view = models.CharField(
+        max_length=8,
+        choices=PRICELIST_VIEWS,
+        default='grid',
+        verbose_name='Вид прайслиста'
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Создан'
+    )
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Изменен')
+
+    class Meta:
+        verbose_name = 'Прайслист'
+        verbose_name_plural = 'Прайслисты'
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        super(Pricelist, self).save(*args, **kwargs)
+        if self.is_default:
+            Pricelist.objects.all().exclude(pk=self.pk).update(
+                is_default=False
+            )
+
+
 class PageMixin(models.Model):
     is_published = models.BooleanField(
         blank=True,
@@ -36,7 +95,22 @@ class PageMixin(models.Model):
         unique=True,
         verbose_name='Ключ ЧПУ'
     )
-    content = models.TextField(verbose_name='Основное содержимое')
+    content = models.TextField(
+        blank=True,
+        default='',
+        verbose_name='Основное содержимое'
+    )
+    pricelist = models.ForeignKey(
+        Pricelist,
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        verbose_name='Прайслист',
+        help_text='''
+            Это поле добавляет после основного содержимого страницы выбранный
+            прайслист.
+        '''
+    )
     title = models.CharField(
         max_length=255,
         default='',
@@ -111,6 +185,19 @@ class PageMixin(models.Model):
 
     def get_absolute_url(self):
         return reverse('page', kwargs={'slug' : self.slug})
+
+    def clean(self):
+        if not self.pricelist and not self.content:
+            raise ValidationError({
+                'content': '''
+                    Должно быть заполнено как минимум одно из двух
+                    полей: "Основное содержимое" или "Прайслист"
+                ''',
+                'pricelist': '''
+                    Должно быть заполнено как минимум одно из двух
+                    полей: "Основное содержимое" или "Прайслист"
+                '''
+            })
 
     def set_slug(self, source):
         if not self.slug:
@@ -230,65 +317,6 @@ class ThumbnailProcessor():
 
         return str(result_path).replace(
             str(settings.MEDIA_ROOT), settings.MEDIA_URL).replace('//', '/')
-
-
-class Pricelist(models.Model):
-    name = models.CharField(
-        max_length=255,
-        verbose_name='Название прайслиста',
-        help_text='Используется только в админке.'
-
-    )
-    is_default = models.BooleanField(
-        db_index=True,
-        blank=True,
-        default=False,
-        verbose_name='Прайс-лист по умолчанию',
-        help_text='''
-            <p>
-                Эта настройка необходима для быстрого создания позиций
-                прайсл-листов.
-            </p>
-            <p>
-                При создании позиции прайс-листа необходимо выбрать к
-                какому прайс-листу она относится. Однако если имеется
-                прайс-лист по умолчанию, то это поле можно оставлять
-                пустым, будет использован прайс-лист по умолчанию.
-            </p>
-            <p>
-                В других механиках это поле не используется.
-            </p>
-        '''
-    )
-    PRICELIST_VIEWS = [
-        ('grid', 'Таблица'),
-        ('tile', 'Плитка'),
-    ]
-    view = models.CharField(
-        max_length=8,
-        choices=PRICELIST_VIEWS,
-        default='grid',
-        verbose_name='Вид прайслиста'
-    )
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name='Создан'
-    )
-    updated_at = models.DateTimeField(auto_now=True, verbose_name='Изменен')
-
-    class Meta:
-        verbose_name = 'Прайслист'
-        verbose_name_plural = 'Прайслисты'
-
-    def __str__(self):
-        return self.name
-
-    def save(self, *args, **kwargs):
-        super(Pricelist, self).save(*args, **kwargs)
-        if self.is_default:
-            Pricelist.objects.all().exclude(pk=self.pk).update(
-                is_default=False
-            )
 
 
 class PricelistCategory(OrderMixin):
@@ -468,18 +496,6 @@ class PriceItem(OrderMixin, ThumbnailProcessor):
 
 
 class Page(PageMixin):
-    pricelist = models.ForeignKey(
-        Pricelist,
-        blank=True,
-        null=True,
-        on_delete=models.SET_NULL,
-        verbose_name='Прайслист',
-        help_text='''
-            Это поле добавляет после основного содержимого страницы выбранный
-            прайслист.
-        '''
-    )
-
     class Meta:
         verbose_name = "Страница сайта"
         verbose_name_plural = "Страницы сайта"
@@ -1003,13 +1019,20 @@ class Homepage(models.Model):
         null=True,
         verbose_name='Главное изображение (hero) для десктопов',
         help_text='''
-            <p>Фото шириной 2420px.</p>
+            <p>
+                Фото шириной 2420px. Высота может быть разной,
+                рекомендуется 746px.
+            </p>
             <p>
                 <strong>Очень важно!</strong> Это фото будет размещено на
                 сайте без какой-либо обработки и оптимизации размера,
                 поэтому оно должно быть подготовлено оператором.
                 Рекомендуется использовать прогрессивный jpeg размером не
                 более 200-400kb.
+            </p>
+            <p>
+                Рекомендуется сжать фото с помощью
+                <a href="https://imagecompressor.com/ru/">этого сервиса</a>.
             </p>
         '''
     )
@@ -1028,6 +1051,10 @@ class Homepage(models.Model):
                 Рекомендуется использовать прогрессивный jpeg размером не
                 более 100-300kb.
             </p>
+            <p>
+                Рекомендуется сжать фото с помощью
+                <a href="https://imagecompressor.com/ru/">этого сервиса</a>.
+            </p>
         '''
     )
     hero_tablet_size = models.CharField(max_length=128, null=True, blank=True)
@@ -1045,6 +1072,10 @@ class Homepage(models.Model):
                 поэтому оно должно быть подготовлено оператором.
                 Рекомендуется использовать прогрессивный jpeg размером не
                 более 100-200kb.
+            </p>
+            <p>
+                Рекомендуется сжать фото с помощью
+                <a href="https://imagecompressor.com/ru/">этого сервиса</a>.
             </p>
         '''
     )

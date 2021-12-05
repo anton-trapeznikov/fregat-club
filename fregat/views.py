@@ -65,6 +65,7 @@ class HomepageView(TemplateView, MediaViewMixin):
         self.context['without_breadcrumbs'] = True
 
         self.add_content()
+        self.add_metatags()
         self.add_media(self.context, Media.objects.filter(homepage=self.object))
 
         return self.context
