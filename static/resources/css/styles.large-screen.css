@@ -742,6 +742,11 @@
         background-image: url(/static/resources/img/homepage__sticker_pool.svg);
     }
 
+    .homepage__sticker_hydromassage
+    {
+        background-image: url(/static/resources/img/homepage__sticker_hydromassage.svg);
+    }
+
     .homepage__sticker_pot
     {
         background-image: url(/static/resources/img/homepage__sticker_pot.svg);
